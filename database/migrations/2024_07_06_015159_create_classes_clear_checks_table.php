@@ -14,11 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::create('classes_clear_checks', function (Blueprint $table) {
-            $table->id(); // 自動インクリメントのプライマリキー
-            $table->unsignedBigInteger('user_id'); // ユーザーID
-            $table->unsignedBigInteger('grade_id'); // グレードID
-            $table->tinyInteger('clear_fig'); // クリアフィギュア
-            $table->timestamps(); // 作成日時と更新日時
+            $table->id(); 
+            $table->unsignedBigInteger('user_id'); 
+            $table->unsignedBigInteger('grade_id'); 
+            $table->tinyInteger('clear_fig'); 
+            $table->timestamps();
         });        
     }
 
