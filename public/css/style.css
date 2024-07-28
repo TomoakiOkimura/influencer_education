@@ -1,0 +1,425 @@
+@charset "UTF-8";
+
+/* 共通ナビゲーションまでの部分 */
+body{
+    font-family: 'Meiryo UI',sans-serif;
+}
+.navbar {
+    background-color: cyan;
+    padding: 5px;
+}
+nav ul{
+    margin: 0 ;
+    padding: 10px ;
+    display: flex;
+    justify-content: flex-start;
+    text-align: center;
+    }
+    nav ul li{
+    list-style: none;
+    min-width: 90px;
+    margin: 20px;
+    justify-content: center; /* 水平方向の中央揃え */
+    align-items: center;     /* 垂直方向の中央揃え */
+    width: 120px;            /* ボタンの幅 */
+    height: 40px;  
+
+
+    }
+    ul li a{
+        display: block;
+        width: 100%;
+        padding: 10px 0;
+        text-decoration: none;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 20vh;
+        background-color: gray;
+    }
+
+/* 授業一覧ページCSS---------------------- */
+
+
+ /* 戻るボタン装飾 */
+ .back{
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    text-decoration: none;
+    margin-left: 10%;
+ }
+/* タイトル */
+ h1{
+    font-weight: bold;
+    margin-left: 10%;
+ }
+
+
+/* --授業一覧画面コンテナ部分-- */
+
+/* 横並びに */
+ .main  {
+    display: flex;
+    padding: 20px;
+    align-items: flex-start ;
+ }
+
+ .container-1{
+    display: flex;
+    flex-direction: column; /* 縦に並べる */
+    align-items: flex-start; /* 左揃え */
+    margin: 20px; /* 右側に余白を追加 */
+    min-width: 250px; /* 最小幅を設定 */
+
+ }
+
+
+ /* 新規登録ボタンの装飾  */
+.register{
+    display: block; /* ブロック要素として扱う */
+    border-radius: 10vh;
+    background-color: rgb(30, 162, 118);
+    width: 100%; /* 親要素に対して幅100% */
+    padding: 10px 0; /* 上下のパディング */
+    text-decoration: none;
+    color: #fff;
+    text-align: center;
+    border: solid 1px #918d8d;
+    margin-bottom: 20px; /* 下に余白 */
+
+}
+ /* 学年一覧サイドバー部分 */
+ .grade-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.grade-card{
+border-radius: 100px;
+display: block;
+width: 100%;
+padding: 15px;
+box-sizing: border-box;
+color: #FFF;
+text-decoration: none;
+text-align: center;
+margin: 10px 0;
+border: solid 1px #918d8d;
+cursor: pointer; /* クリック可能であることを示す */
+}
+/* 水色の設定 */
+.grade-1, .grade-2, .grade-3, .grade-4, .grade-5, .grade-6 {
+    background-color: #ADD8E6; /* 水色 */
+}
+
+/* 赤の設定 */
+.grade-7, .grade-8, .grade-9 {
+    background-color: #FF0000; /* 赤 */
+}
+
+/* 青の設定 */
+.grade-10, .grade-11, .grade-12 {
+    background-color: #0000FF; /* 青 */
+}
+
+.container-2 {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 100px;
+    max-width: 1200px;
+}
+/* 表示中の学年タイトルの装飾  */
+    .grade-title{
+        font-weight: bold;
+        text-align: center;
+        border-radius: 1vh;
+        background-color: rgb(123, 210, 247);
+        color: #fff;
+        width: 30%;
+        margin: 10px 100px;
+        padding: 15px ;
+        border: solid 1px #918d8d;
+        font-size: 30px;
+
+     
+    }    
+/* サムネイル部分 */
+    
+    section {
+    margin: 10px 10px 10px 100px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-auto-rows:300px;
+        grid-gap: 20px 20px;
+        grid-auto-rows: minmax(300px, auto); /* 自動調整可能な高さ */
+
+    }
+   
+
+    article{
+        border: solid #ccc 1px;
+        padding: 15px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden; /* オーバーフロー制御 */
+        max-height: 1000px; /* 最大高さを設定 */
+        position: relative; /* 必要に応じてスクロールを追加 */
+
+    }
+    .img{
+        width: 100%; /* 幅を親要素に合わせて100%に */
+        max-width: 250px; /* 画像の最大幅を固定 */
+        height: auto; /* 高さを自動調整 */
+        max-height: 200px; /* 画像の最大高さを設定 */
+        object-fit: cover; /* 画像の縦横比を維持しつつ、枠に収める */
+        border-radius: 5px;
+        margin-bottom: 15px;
+    
+    }
+
+    .curriculum-title{
+        font-weight: bold;
+        font-size: 20px;
+        margin: 10px 0;
+    text-align: center;
+    }
+    .delivery-time{
+        font-size: 15px;
+        list-style: none;
+        margin: 5px 0;
+    }
+    .linkbutton{
+        display: flex;
+        justify-content: space-between;
+        gap: 10px; /* ボタン間のスペースを追加 */
+        margin-top: 10px;
+        width: 100%; /* コンテナの幅を100%に */
+            }
+    .btn-link{
+        display: inline-block;
+        border-radius: 5px;
+        background-color: rgb(129, 162, 30);
+        padding: 10px;
+        text-decoration: none;
+        color: #fff;
+        width: 48%; /* ボタンの幅を調整 */
+        text-align: center;
+        box-sizing: border-box; /* パディングを含めてボックスサイズを計算 */
+            }
+        
+
+/* 授業内容設定CSS ---------------------*/
+.container-cc1 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 600px; /* フォーム全体の最大幅 */
+    margin: 40px auto; /* 中央揃えと上下の余白調整 */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 見出しと戻るリンク */
+h1 {
+    font-size: 24px;
+    color: #333;
+    text-align: center; /* 中央揃え */
+    margin-bottom: 20px;
+}
+
+.back-link-d {
+    display: inline-block;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+a.back-link:hover {
+    text-decoration: underline;
+}
+
+.thumbnail-upload {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: center; /* 中央揃え */
+}
+
+.img-register {
+    max-width: 150px; /* 画像の最大幅 */
+    height: auto;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+input[type="file"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table tr td {
+    padding: 10px;
+    vertical-align: middle;
+    font-size: 16px;
+    color: #333;
+}
+
+select, input[type="text"], textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+textarea {
+    height: 100px;
+    resize: none; /* サイズ変更を無効に */
+}
+
+label {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #333;
+    margin-top: 10px;
+}
+
+label input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.btn {
+    background-color: #50808e;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 150px;
+    text-align: center;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #416a73;
+}
+
+/* 配信日時設定CSS ---------------------*/
+
+.container-d {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* 中央揃え */
+}
+
+.container-d h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: left; 
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+    margin-top: 20px;
+    text-align: left; 
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.container-d1 {
+    text-align: center; /* 中央揃え */
+    margin-bottom: 20px;
+}
+
+.container-d1 h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+table th, table td {
+    padding: 10px;
+    
+}
+
+table th {
+    background-color: #f9f9f9;
+}
+
+input[type="date"], input[type="time"] {
+    width: 90%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button.delete-btn {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+button#add-row {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    cursor: pointer;
+    margin-bottom: 20px 0;
+}
+
+button.btn-primary {
+    background-color: #343a40;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
