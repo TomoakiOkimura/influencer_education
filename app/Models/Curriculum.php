@@ -36,9 +36,8 @@ public function getCurriculumList(){
     ->leftJoin('delivery_times','curriculums.id','=','delivery_times.curriculums_id')
     ->select('curriculums.*','grades.name','delivery_times.delivery_from','delivery_times.delivery_to','delivery_times.id as delivery_time_id')
     ->where('grade_id','=','1')
-    ->get();
-
-
+    ->get()
+    ->groupBy('id');
     return $curriculums;
 }
 
@@ -72,7 +71,8 @@ public function searchCurriculums($gradeId){
     ->leftJoin('delivery_times','curriculums.id','=','delivery_times.curriculums_id')
     ->select('curriculums.*','grades.name','delivery_times.delivery_from','delivery_times.delivery_to')
     ->where('grade_id','=',$gradeId)
-    ->get();
+    ->get()
+    ->groupBy('id');
         return $curriculums; 
 }
 

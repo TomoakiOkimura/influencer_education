@@ -26,7 +26,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // ----------------------授業一覧画面表示
 Route::get('/curriculum_list', [App\Http\Controllers\CurriculumController::class, 'showCurriculumList'])->name('show.curriculum.list');
 // 学年ボタン押下後に学年ごとの授業の表示
-Route::get('/curriculum_list/{gradeId}', [App\Http\Controllers\CurriculumController::class, 'getCurriculum'])->name('search.curriculum.list');
+Route::get('/curriculum_list/{gradeId?}', [App\Http\Controllers\CurriculumController::class, 'getCurriculum'])->name('search.curriculum.list');
 //これいるんかいね？
 Route::get('/grades', [App\Http\Controllers\CurriculumController::class, 'showGrades']);
 
