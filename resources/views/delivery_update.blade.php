@@ -18,24 +18,24 @@
                     @for($i = 0; $i < 3; $i++)
                         <tr>
                             <td>
-                                <input type="date" name="delivery_from_date[]"
-                                    value="{{ isset($delivery_times[$i]) ? \Carbon\Carbon::parse($delivery_times[$i]->delivery_from)->format('Y-m-d') : '' }}"
+                                <input type="text" name="delivery_from_date[]"
+                                    value="{{ isset($delivery_times[$i]) ? \Carbon\Carbon::parse($delivery_times[$i]->delivery_from)->format('Ymd') : '' }}"
                                     placeholder="年月日">
                             </td>
                             <td>
-                                <input type="time" name="delivery_from_time[]"
-                                    value="{{ isset($delivery_times[$i]) ? \Carbon\Carbon::parse($delivery_times[$i]->delivery_from)->format('H:i') : '' }}"
+                                <input type="text" name="delivery_from_time[]"
+                                    value="{{ isset($delivery_times[$i]) ? \Carbon\Carbon::parse($delivery_times[$i]->delivery_from)->format('Hi') : '' }}"
                                     placeholder="時分">
                             </td>
                             <td><h3>～</h3></td>
                             <td>
-                                <input type="date" name="delivery_to_date[]"
-                                    value="{{ isset($delivery_times[$i]) ? \Carbon\Carbon::parse($delivery_times[$i]->delivery_to)->format('Y-m-d') : '' }}"
+                                <input type="text" name="delivery_to_date[]"
+                                    value="{{ isset($delivery_times[$i]) ? \Carbon\Carbon::parse($delivery_times[$i]->delivery_to)->format('Ymd') : '' }}"
                                     placeholder="年月日">
                             </td>
                             <td>
-                                <input type="time" name="delivery_to_time[]"
-                                    value="{{ isset($delivery_times[$i]) ? \Carbon\Carbon::parse($delivery_times[$i]->delivery_to)->format('H:i') : '' }}"
+                                <input type="text" name="delivery_to_time[]"
+                                    value="{{ isset($delivery_times[$i]) ? \Carbon\Carbon::parse($delivery_times[$i]->delivery_to)->format('Hi') : '' }}"
                                     placeholder="時分">
                             </td>
                             {{-- 削除ボタン --}}

@@ -85,7 +85,7 @@ public function registCurriculum($request,$image_path) {
         DB::table('curriculums')->insert([
             'title' => $request->title,
             'thumbnail' => $image_path,
-            'videl_url' =>$request -> video_url,
+            'video_url' =>$request -> video_url,
             'description' => $request->description,
             'alway_delivery_flg' => $request->alway_delivery_flg,
             'grade_id' => $request->grade_id,

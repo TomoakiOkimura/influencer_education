@@ -71,9 +71,9 @@ class CurriculumController extends Controller
              $model ->registCurriculum($request,$image_path);
              DB::commit();
              } catch(\Exception $e){
-
-             DB::rollback();
-            return back();
+                DB::rollback();
+                Log::error("登録処理エラー: " . $e->getMessage());
+                return back()->withErrors(['error' => '登録処理に失敗しました。再度お試しください。']);
             }
                  // 処理が完了したらcurriculum_listの画面ににリダイレクト
                     return redirect()->route('admin.show.curriculum.list');
@@ -85,6 +85,7 @@ class CurriculumController extends Controller
     public function showCurriculumEdit($id){
         DB::beginTransaction();
         try{ 
+       
         $model = new Curriculum();
         $curriculum = $model -> getDetailCurriculum($id);
         // dd($curriculum);
@@ -118,7 +119,8 @@ class CurriculumController extends Controller
 
         DB::beginTransaction();
         try{
-            
+              // 登録後に現在更新登録している学年一覧へ戻るため学年情報の取得
+            $grade_id = DB::table('curriculums')->where('id', $id)->value('grade_id');    
             $model = new Curriculum();
              $model ->updateCurriculum($request,$id,$image_path);
              DB::commit();
@@ -130,7 +132,7 @@ class CurriculumController extends Controller
             return back();
             }
      // 処理が完了したらcurriculum_listの画面ににリダイレクト
-     return redirect()->route('admin.show.curriculum.list');
+     return redirect()->route('admin.search.curriculum.list', ['gradeId' => $grade_id]);
     }
 
   

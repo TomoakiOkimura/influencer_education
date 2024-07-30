@@ -20,59 +20,134 @@ class DeliveryController extends Controller
         }
 
      // 配信期間新規登録処理idにはカリキュラムのidが入っている
-    public function deliveryNewCreate(Request $request,$id){
-                // dd($request->all());
-                DB::beginTransaction();
-             try{ 
-                    $model = new DeliveryTime();
-                    $model ->registDelivery($request,$id);
-                    DB::commit();
-                    } catch(\Exception $e){
-                        DB::rollBack();
-                                    // memoエラーメッセージをログに記録
-                                    // Log::error('Delivery registration failed: ' . $e->getMessage());
-                                    // return response()->json(['message' => '登録に失敗しました。'], 500);
-                    }
-            return redirect(route('admin.show.curriculum.list'))->with('新規登録完了');
-            }
+  public function deliveryNewCreate(Request $request, $id)
+  {
+      DB::beginTransaction();
+      try {
+                // 登録後に現在更新登録している学年一覧へ戻るため学年情報の取得
+     $grade_id = DB::table('curriculums')->where('id', $id)->value('grade_id');
+          $deliveryTimes = [];
+          foreach ($request->delivery_from_date as $index => $from_date) {
+              $from_time = $request->delivery_from_time[$index] ?? '0000'; // デフォルト時間を設定
+              $to_date = $request->delivery_to_date[$index] ?? null;
+              $to_time = $request->delivery_to_time[$index] ?? '2359'; // デフォルト時間を設定
+  
+              if ($from_date && $from_time && $to_date && $to_time) {
+                  try {
+                      // 日付と時間を適切なフォーマットに変換
+                      $formattedFromDate = substr($from_date, 0, 4) . '-' . substr($from_date, 4, 2) . '-' . substr($from_date, 6, 2);
+                      $formattedFromTime = substr($from_time, 0, 2) . ':' . substr($from_time, 2, 2);
+                      $formattedToDate = substr($to_date, 0, 4) . '-' . substr($to_date, 4, 2) . '-' . substr($to_date, 6, 2);
+                      $formattedToTime = substr($to_time, 0, 2) . ':' . substr($to_time, 2, 2);
+  
+                      $deliveryFrom = Carbon::createFromFormat('Y-m-d H:i', $formattedFromDate . ' ' . $formattedFromTime);
+                      $deliveryTo = Carbon::createFromFormat('Y-m-d H:i', $formattedToDate . ' ' . $formattedToTime);
+  
+                      $deliveryTimes[] = [
+                          'curriculums_id' => $id,
+                          'delivery_from' => $deliveryFrom,
+                          'delivery_to' => $deliveryTo,
+                          'created_at' => now(),
+                          'updated_at' => now(),
+                      ];
+                  } catch (\Exception $e) {
+                      Log::error("日時フォーマットエラー: " . $e->getMessage());
+                      return back()->withErrors(['error' => '日付または時間の形式が正しくありません。']);
+                  }
+              }
+          }
+  
+          // データベースへの挿入
+          if (!empty($deliveryTimes)) {
+              DeliveryTime::insert($deliveryTimes);
+          }
+  
+          DB::commit();
+      } catch(\Exception $e) {
+          DB::rollback();
+          Log::error("登録処理エラー: " . $e->getMessage());
+          return back()->withErrors(['error' => '登録処理に失敗しました。再度お試しください。']);
+      }
+  
+      return redirect()->route('admin.search.curriculum.list', ['gradeId' => $grade_id]);
+  }
+  
 
     // 配信期間設定--更新登録画面表示
     public function showDeliveryUpdate($id){
-        DB::beginTransaction();
-        try{
-                $model = new DeliveryTime();
+          $model = new DeliveryTime();
                 $curriculum = $model ->searchDeliveryTime($id);
                 // $curriculumから$delivery_timesを抽出
                 $delivery_times = DB::table('delivery_times')->where('curriculums_id', $id)->get();
-                //   dd($curriculum, $delivery_times);DB::commit();
-            } catch(\Exception $e){
-                DB::rollBack();}
+                //   dd($curriculum, $delivery_times);
+         
 
         return view('delivery_update',['curriculum'=> $curriculum,'delivery_times'=>$delivery_times]);
     }
 
-    // 配信期間設定--更新登録処理
-    public function deliveryUpdate(Request $request,$id){
-        DB::beginTransaction();
-        try{
-          // 既存の配信期間情報を削除
-            DeliveryTime::deleteByCurriculumId($id);
-            // 新しい配信期間情報を挿入
-            $deliveryTimes = [];
-            foreach ($request->delivery_from_date as $index => $from_date) {
-            $deliveryTimes[] = [
-                'from_date' => $from_date,
-                'from_time' => $request->delivery_from_time[$index],
-                'to_date' => $request->delivery_to_date[$index],
-                'to_time' => $request->delivery_to_time[$index],
-            ];
-        }
-        DeliveryTime::insertDeliveryTimes($id, $deliveryTimes);
-    } catch(\Exception $e){
-        DB::rollBack();}
+//    配信期間更新処理
+public function deliveryUpdate(Request $request, $curriculum_id)
+{
+    DB::beginTransaction();
+    try {
+        // 登録後に現在更新登録している学年一覧へ戻るため学年情報の取得
+        $grade_id = DB::table('curriculums')->where('id', $curriculum_id)->value('grade_id');
+        
+        // 既存の配信期間情報を削除
+        DeliveryTime::where('curriculums_id', $curriculum_id)->delete();
 
-        return redirect()->route('admin.show.curriculum.list')->with('status', '配信期間が更新されました');
+        // 新しい配信期間情報を挿入
+        $deliveryTimes = [];
+        foreach ($request->delivery_from_date as $index => $from_date) {
+            $from_time = $request->delivery_from_time[$index] ?? '00:00'; // デフォルト時間を設定
+            $to_date = $request->delivery_to_date[$index] ?? null;
+            $to_time = $request->delivery_to_time[$index] ?? '23:59'; // デフォルト時間を設定
+
+            // デバッグ: 入力データをログに記録
+            Log::info("From Date: $from_date, From Time: $from_time, To Date: $to_date, To Time: $to_time");
+
+            // 日付と時間がすべて入力されている場合にのみ処理を行う
+            if ($from_date && $from_time && $to_date && $to_time) {
+                try {
+                     // 日付と時間を適切なフォーマットに変換
+                     $formattedFromDate = substr($from_date, 0, 4) . '-' . substr($from_date, 4, 2) . '-' . substr($from_date, 6, 2);
+                     $formattedFromTime = substr($from_time, 0, 2) . ':' . substr($from_time, 2, 2);
+                     $formattedToDate = substr($to_date, 0, 4) . '-' . substr($to_date, 4, 2) . '-' . substr($to_date, 6, 2);
+                     $formattedToTime = substr($to_time, 0, 2) . ':' . substr($to_time, 2, 2);
+ 
+                     $deliveryFrom = Carbon::createFromFormat('Y-m-d H:i', $formattedFromDate . ' ' . $formattedFromTime);
+                     $deliveryTo = Carbon::createFromFormat('Y-m-d H:i', $formattedToDate . ' ' . $formattedToTime);
+ 
+
+                    // フォーマットが成功した場合のみ配列に追加
+                    $deliveryTimes[] = [
+                        'curriculums_id' => $curriculum_id,
+                        'delivery_from' => $deliveryFrom,
+                        'delivery_to' => $deliveryTo,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ];
+                } catch (\Exception $e) {
+                    Log::error("日時フォーマットエラー: " . $e->getMessage());
+                    return back()->withErrors(['error' => '日付または時間の形式が正しくありません。']);
+                }
+            }
+        }
+
+        // データベースへの挿入
+        if (!empty($deliveryTimes)) {
+            DeliveryTime::insert($deliveryTimes);
+        }
+
+        DB::commit();
+    } catch(\Exception $e) {
+        DB::rollback();
+        Log::error("登録処理エラー: " . $e->getMessage());
+        return back()->withErrors(['error' => '登録処理に失敗しました。再度お試しください。']);
     }
+
+    return redirect()->route('admin.search.curriculum.list', ['gradeId' => $grade_id]);
+}
     // 削除ボタン押下後データがあった際の削除処理
     public function destroy($id)
     {

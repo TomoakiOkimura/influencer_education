@@ -30,7 +30,7 @@
                         <div class="container-2">
                         <div class="grade-title">{{$currentGradeName}}</div>
                         <section id="lesson-list">
-                        @foreach($curriculums as $curriculum)
+                        @foreach($curriculums->sortBy('id')  as $curriculum)
                         
                             <article id="lessons">
                                 @if($curriculum->thumbnail)
