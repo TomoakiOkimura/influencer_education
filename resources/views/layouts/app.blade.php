@@ -89,5 +89,6 @@
             @yield('content')
         </main>
     </div>
+    <script>var baseUrl = "{{ url('user/curriculum_list')}}";</script>
 </body>
 </html>

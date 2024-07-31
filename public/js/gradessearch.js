@@ -8,11 +8,13 @@ $(document).ready(function() {
         var gradeId = $(this).data('grade-id');
     
         console.log(gradeId);
+        // 配信期間を更新した後に非同期で各学年授業のページ遷移できなかったので動的に変わるように変更。baseUrlはブレードのscriptタグ内で生成
+        var url =baseUrl + '/' + gradeId;
 
     //②ajax通信を使用して対象のデータを表示する    
     $.ajax({
         // ③web.phpのURLと連動させて先ほど取得したgradeIdも渡す
-        url: 'curriculum_list/' + gradeId,
+        url: url,
         type: 'GET',
         dataType:'html'
     }).done(function(data) {
