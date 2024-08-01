@@ -52,21 +52,36 @@ class CurriculumController extends Controller
     
       // 授業新規登録処理
     public function curriculumCreate(Request $request){
-        DB::beginTransaction();
-                    //①画像ファイルの取得
-                    $image = $request->file('image');
-                    
-                    //②画像ファイルのファイル名を取得
-                    $file_name = $image->getClientOriginalName();
-                    
-                    //③storage/app/public/imagesフォルダ内に、取得したファイル名で保存
-                    $image->storeAs('public/images', $file_name);
-                    
-                    //④データベース登録用に、ファイルパスを作成
-                    $image_path = 'storage/images/' . $file_name;
+         // バリデーションルールの定義
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'video_url' => 'required|url',
+            'description' => 'required|string',
+            'grade_id' => 'required|exists:grades,id',
+            'alway_delivery_flg' => 'nullable|boolean',
+        ], [
+            'title.required' => '授業名を入力してください。',
+            'image.image' => '画像ファイルをアップロードしてください。',
+            'image.mimes' => 'JPEG, PNG, JPG, GIF形式の画像をアップロードしてください。',
+            'image.max' => '画像のサイズは2MB以下にしてください。',
+            'video_url.required' => '動画urlを入力してください',
+            'video_url.url' => '有効なurlを入力してください',
+            'description' => '授業概要を入力してください',
+            'grade_id.required' => '学年を選択してください。',
+            'grade_id.exists' => '選択された学年は存在しません。',
+        ]);
 
-                  
+        DB::beginTransaction();
         try{ 
+             // 画像ファイルの取得と保存
+        $image_path = null;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $file_name = $image->getClientOriginalName();
+            $image->storeAs('public/images', $file_name);
+            $image_path = 'storage/images/' . $file_name;
+        }
             $model = new Curriculum();
              $model ->registCurriculum($request,$image_path);
              DB::commit();
@@ -83,6 +98,7 @@ class CurriculumController extends Controller
 
     // 授業更新登録画面表示
     public function showCurriculumEdit($id){
+        
         DB::beginTransaction();
         try{ 
        
@@ -102,6 +118,26 @@ class CurriculumController extends Controller
     }
     // 授業更新登録処理
     public function curriculumEdit(Request $request, $id){
+
+               // バリデーションルールの定義
+                $request->validate([
+                    'title' => 'required|string|max:255',
+                    'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                    'video_url' => 'required|url',
+                    'description' => 'required|string',
+                    'grade_id' => 'required|exists:grades,id',
+                    'alway_delivery_flg' => 'nullable|boolean',
+                ], [
+                    'title.required' => '授業名を入力してください。',
+                    'image.image' => '画像ファイルをアップロードしてください。',
+                    'image.mimes' => 'JPEG, PNG, JPG, GIF形式の画像をアップロードしてください。',
+                    'image.max' => '画像のサイズは2MB以下にしてください。',
+                    'video_url.required' => '動画urlを入力してください',
+                    'video_url.url' => '有効なurlを入力してください',
+                    'description' => '授業概要を入力してください',
+                    'grade_id.required' => '学年を選択してください。',
+                    'grade_id.exists' => '選択された学年は存在しません。',
+                ]);
         // 画像ファイルの取得
     $image = $request->file('image');
     $image_path = null;

@@ -423,3 +423,8 @@ button.btn-primary {
     cursor: pointer;
     font-size: 16px;
 }
+/* バリテーションcss */
+.error-message {
+    color: red;
+    font-weight: bold;
+}

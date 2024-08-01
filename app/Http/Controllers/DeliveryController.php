@@ -22,6 +22,35 @@ class DeliveryController extends Controller
      // 配信期間新規登録処理idにはカリキュラムのidが入っている
   public function deliveryNewCreate(Request $request, $id)
   {
+    // バリデーションルールの定義
+    $errors = [];
+
+    foreach ($request->delivery_from_date as $index => $from_date) {
+        $from_time = $request->delivery_from_time[$index];
+        $to_date = $request->delivery_to_date[$index];
+        $to_time = $request->delivery_to_time[$index];
+
+        if ($from_date || $from_time || $to_date || $to_time) {
+            if (!$from_date || !$from_time || !$to_date || !$to_time) {
+                $errors[] = "配信期間の行 " . ($index + 1) . " の情報を完全に入力してください。";
+            } else {
+                try {
+                    $formattedFromDate = Carbon::createFromFormat('Ymd Hi', $from_date . ' ' . $from_time);
+                    $formattedToDate = Carbon::createFromFormat('Ymd Hi', $to_date . ' ' . $to_time);
+                    if ($formattedToDate->lt($formattedFromDate)) {
+                        $errors[] = "配信期間の行 " . ($index + 1) . " で終了日時は開始日時以降でなければなりません。";
+                    }
+                } catch (\Exception $e) {
+                    $errors[] = "配信期間の行 " . ($index + 1) . " で日付または時間の形式が無効です。";
+                }
+            }
+        }
+    }
+
+    if ($errors) {
+        return back()->withErrors($errors)->withInput();
+    }
+
       DB::beginTransaction();
       try {
                 // 登録後に現在更新登録している学年一覧へ戻るため学年情報の取得
@@ -86,8 +115,36 @@ class DeliveryController extends Controller
     }
 
 //    配信期間更新処理
-public function deliveryUpdate(Request $request, $curriculum_id)
-{
+public function deliveryUpdate(Request $request, $curriculum_id){
+// {   １行は入力していないと駄目なバリテーション
+     $errors = [];
+
+    foreach ($request->delivery_from_date as $index => $from_date) {
+        $from_time = $request->delivery_from_time[$index];
+        $to_date = $request->delivery_to_date[$index];
+        $to_time = $request->delivery_to_time[$index];
+
+        if ($from_date || $from_time || $to_date || $to_time) {
+            if (!$from_date || !$from_time || !$to_date || !$to_time) {
+                $errors[] = "配信期間の行 " . ($index + 1) . " の情報を完全に入力してください。";
+            } else {
+                try {
+                    $formattedFromDate = Carbon::createFromFormat('Ymd Hi', $from_date . ' ' . $from_time);
+                    $formattedToDate = Carbon::createFromFormat('Ymd Hi', $to_date . ' ' . $to_time);
+                    if ($formattedToDate->lt($formattedFromDate)) {
+                        $errors[] = "配信期間の行 " . ($index + 1) . " で終了日時は開始日時以降でなければなりません。";
+                    }
+                } catch (\Exception $e) {
+                    $errors[] = "配信期間の行 " . ($index + 1) . " で日付または時間の形式が無効です。";
+                }
+            }
+        }
+    }
+
+    if ($errors) {
+        return back()->withErrors($errors)->withInput();
+    }
+
     DB::beginTransaction();
     try {
         // 登録後に現在更新登録している学年一覧へ戻るため学年情報の取得
