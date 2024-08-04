@@ -15,7 +15,7 @@ class DeliveryController extends Controller
         $user = Auth::user();
         $progress = CurriculumProgress::where('user_id', $user->id)->where('curriculum_id', $id)->first();
 
-        return view('delivery', compact('curriculum', 'progress'));
+        return view('layout.delivery', compact('curriculum', 'progress'));
     }
 
     public function complete(Request $request, $id)

@@ -2,26 +2,29 @@
 
 @section('content')
 <div class="container">
-    <!-- 共通ヘッダー -->
-    <div class="header">
-        <a href="{{ route('timetable') }}">時間割</a>
-        <a href="{{ route('progress') }}">授業進捗</a>
-        <a href="{{ route('profile') }}">プロフィール設定</a>
-        @if(Auth::check())
-            <a href="{{ route('logout') }}">ログアウト</a>
-        @else
-            <a href="{{ route('login') }}">ログイン</a>
-        @endif
-    </div>
 
-    <!-- バナー画像 -->
-    <div class="banner">
-        @foreach($banners as $banner)
-            <div class="banner-item">
-                <img src="{{ asset('storage/' . $banner->image_path) }}" alt="バナー画像">
-                <button onclick="showBanner('{{ $banner->id }}')">バナー画像を表示</button>
-            </div>
-        @endforeach
+    <!-- バナー画像表示部分 -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            @foreach ($banners as $index => $banner)
+                <li data-target="#carouselExampleIndicators" data-slide-to="{{ $index }}" class="{{ $index == 0 ? 'active' : '' }}"></li>
+            @endforeach
+        </ol>
+        <div class="carousel-inner">
+            @foreach ($banners as $index => $banner)
+                <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                    <img class="d-block w-100" src="{{ $banner->image_url }}" alt="Banner Image {{ $index + 1 }}">
+                </div>
+            @endforeach
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
 
     <!-- お知らせ -->

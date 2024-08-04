@@ -12,6 +12,6 @@ class TopController extends Controller
     {
         $banners = Banner::all();
         $articles = Article::all();
-        return view('top', compact('banners', 'articles'));
+        return view('layouts.top', compact('banners', 'articles'));
     }
 }
