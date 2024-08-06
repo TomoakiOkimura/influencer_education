@@ -7,13 +7,14 @@
     <h1>配信日時設定</h1>
 
     <div class="container-d1">
-        <h4>授業タイトルが入る</h4>
+             <!-- カリキュラムのタイトルを表示 -->
+             <h4>{{ $curriculum->title }}</h4>
 
         @if($errors->any())
             <div class="alert alert-danger">
                 <ul>
                     @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
+                        <li class="error-message">{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>

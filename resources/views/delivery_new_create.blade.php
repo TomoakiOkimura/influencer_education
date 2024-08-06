@@ -8,13 +8,14 @@
 </div>
 
 <div class="container-d1">
-    <h4>授業タイトルが入る</h4>
+    <!-- カリキュラムのタイトルを表示 -->
+    <h4>{{ $curriculum->title }}</h4>
 
     @if($errors->any())
         <div class="alert alert-danger">
             <ul>
                 @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    <li class="error-message">{{ $error }}</li>
                 @endforeach
             </ul>
         </div>
@@ -23,8 +24,9 @@
     <form action="{{ route('admin.delivery.new.create', $curriculum->id) }}" method="POST">
         @csrf
         <table>
+
             <tbody id="delivery_times">
-                @for($i = 0; $i < 3; $i++)
+                @for($i = 0; $i < count(old('delivery_from_date', $delivery_times)); $i++)
                     <tr>
                         <td>
                             <input type="text" name="delivery_from_date[]"
