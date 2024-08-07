@@ -2,7 +2,7 @@
 
 @section('content')
 <script src="{{ asset('js/delivery.js') }}"></script>
-<a href="{{ route('admin.show.curriculum.list') }}" class="back">←戻る</a>
+<a href="{{ route('admin.search.curriculum.list', $curriculum->grade_id) }}" class="back">←戻る</a>
 <div>
     <h1>配信日時設定</h1>
 </div>
@@ -24,6 +24,8 @@
     <form action="{{ route('admin.delivery.new.create', $curriculum->id) }}" method="POST">
         @csrf
         <table>
+
+            
 
             <tbody id="delivery_times">
                 @for($i = 0; $i < count(old('delivery_from_date', $delivery_times)); $i++)

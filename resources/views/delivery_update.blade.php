@@ -3,7 +3,7 @@
 @section('content')
 <script src="{{ asset('js/delivery.js') }}"></script>
 <div class="container-d">
-    <a href="{{ route('admin.show.curriculum.list') }}" class="back">←戻る</a>
+    <a href="{{ route('admin.search.curriculum.list', $curriculum->grade_id) }}" class="back">←戻る</a>
     <h1>配信日時設定</h1>
 
     <div class="container-d1">

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-cc1">
-    <a href="{{ route('admin.show.curriculum.list') }}" class="back-link">← 戻る</a>
+    <a href="{{ route('admin.search.curriculum.list', $curriculum->grade_id) }}" class="back-link">← 戻る</a>
     <h1>授業設定</h1>
     <form action="{{ route('admin.curriculum.edit', ['id' => $curriculum->id]) }}" method="POST" enctype='multipart/form-data'>
         @csrf
