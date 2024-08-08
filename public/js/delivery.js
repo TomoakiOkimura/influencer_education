@@ -33,22 +33,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const newRow = document.createElement('tr');
     newRow.innerHTML = `
         <td>
-            <input type="text" name="delivery_from_date[]" placeholder="年月日">
+            <input type="date" name="delivery_from_date[]" placeholder="年月日">
             <div class="error-message"></div>
         </td>
         <td>
-            <input type="text" name="delivery_from_time[]" placeholder="時分">
+            <input type="time" name="delivery_from_time[]" placeholder="時分">
             <div class="error-message"></div>
         </td>
         <td><h3>～</h3></td>
         <td>
-            <input type="text" name="delivery_to_date[]" placeholder="年月日">
+            <input type="date" name="delivery_to_date[]" placeholder="年月日">
             <div class="error-message"></div>
         </td>
         <td>
-            <input type="text" name="delivery_to_time[]" placeholder="時分">
+            <input type="time" name="delivery_to_time[]" placeholder="時分">
             <div class="error-message"></div>
         </td>
+         <td><button type="button" class="delete-btn">×</button></td>
     `;
     tbody.appendChild(newRow);
 });

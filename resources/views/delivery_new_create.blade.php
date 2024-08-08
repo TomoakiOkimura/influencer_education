@@ -31,7 +31,7 @@
                 @for($i = 0; $i < count(old('delivery_from_date', $delivery_times)); $i++)
                     <tr>
                         <td>
-                            <input type="text" name="delivery_from_date[]"
+                            <input type="date" name="delivery_from_date[]"
                                 value="{{ old('delivery_from_date.' . $i) }}"
                                 placeholder="年月日">
                             @error('delivery_from_date.' . $i)
@@ -39,7 +39,7 @@
                             @enderror
                         </td>
                         <td>
-                            <input type="text" name="delivery_from_time[]"
+                            <input type="time" name="delivery_from_time[]"
                                 value="{{ old('delivery_from_time.' . $i) }}"
                                 placeholder="時分">
                             @error('delivery_from_time.' . $i)
@@ -48,7 +48,7 @@
                         </td>
                         <td><h3>～</h3></td>
                         <td>
-                            <input type="text" name="delivery_to_date[]"
+                            <input type="date" name="delivery_to_date[]"
                                 value="{{ old('delivery_to_date.' . $i) }}"
                                 placeholder="年月日">
                             @error('delivery_to_date.' . $i)
@@ -56,7 +56,7 @@
                             @enderror
                         </td>
                         <td>
-                            <input type="text" name="delivery_to_time[]"
+                            <input type="time" name="delivery_to_time[]"
                                 value="{{ old('delivery_to_time.' . $i) }}"
                                 placeholder="時分">
                             @error('delivery_to_time.' . $i)
