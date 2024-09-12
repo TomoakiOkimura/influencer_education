@@ -1,0 +1,31 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <button type="button" onclick="history.back()">戻る</button>
+    <div>パスワード変更</div>
+    
+    <form method="POST" action="{{ route('user.password_update') }}">
+        @csrf
+        @method('PUT')
+        
+        <div class="mb-3">
+            <label for="old_password" class="form-label">旧パスワード</label>
+            <input type="password" class="form-control" id="old_password" name="old_password" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="new_password" class="form-label">新パスワード</label>
+            <input type="password" class="form-control" id="new_password" name="new_password" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="new_password_confirmation" class="form-label">新パスワード確認</label>
+            <input type="password" class="form-control" id="new_password_confirmation" name="new_password_confirmation" required>
+        </div>
+
+        <button type="submit" class="btn btn-success">変更</button>
+    </form>
+</div>
+
+@endsection

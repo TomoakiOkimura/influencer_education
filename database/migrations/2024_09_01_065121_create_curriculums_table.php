@@ -13,14 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('curriculums', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('title',255);
+            $table->string('thumnail',255);
+            $table->string('description');
+            $table->string('video_url');
+            $table->boolean('always_delivery_flg',4);
+            $table->unsignedBigInteger('grade_id');
             $table->timestamps();
+
+            $table->foreign('grade_id')->references('id')->on('grades');
         });
     }
 
@@ -31,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('curriculums');
     }
 };
