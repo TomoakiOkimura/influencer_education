@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserRequest;
+use DB;
 
 class ProfileController extends Controller
 {
@@ -81,5 +82,29 @@ class ProfileController extends Controller
 
         return redirect('user/profile_edit')
         ->with('status', 'パスワードの変更が終了しました');
+    }
+
+    //紀谷が追加したパスワードhash課処理。必要なくなれば決してください。
+    public function showPasswordToHash() {
+        $user = User::all();
+        return view('password_hash', ['users' => $user]);
+    }
+
+    public function updatePassWordToHash(Request $request){
+        // dd($request);
+        $user = User::find($request->input('user_id'));
+        $hashPW = Hash::make($request->input('password'));
+        try {
+            DB::beginTransaction();
+            $user->password = $hashPW;
+            $user->save();
+            DB::commit();
+        } catch(\Exception $e) {
+            DB::rollback();
+            \Log::error($e);
+        }
+
+
+        return redirect(route('show.password.hash'));
     }
 }

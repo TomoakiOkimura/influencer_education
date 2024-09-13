@@ -32,6 +32,9 @@ Route::get('user/password_edit', [App\Http\Controllers\user\ProfileController::c
 Route::put('user/password_update', [App\Http\Controllers\user\ProfileController::class, 'password_update'])->name('user.password_update');
 Route::get('user/curriculum_list/{id?}', [App\Http\Controllers\user\CurriculumController::class, 'curriculum_list'])->name('user.curriculum_list');
 
+// 紀谷が追加した仮ルート。
+Route::get('user/password/hash', [App\Http\Controllers\user\ProfileController::class, 'showPasswordToHash'])->name('show.password.hash');
+Route::POST('user/password/hash', [App\Http\Controllers\user\ProfileController::class, 'updatePassWordToHash'])->name('password.hash.update');
 
 Route::get('admin/article_list', [App\Http\Controllers\admin\ArticleController::class, 'article_list'])->name('admin.article_list');
 Route::get('admin/article_create', [App\Http\Controllers\admin\ArticleController::class, 'create'])->name('admin.article_create');
