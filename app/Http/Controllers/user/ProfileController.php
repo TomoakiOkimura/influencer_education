@@ -25,27 +25,41 @@ class ProfileController extends Controller
         return view('user/password_edit');
     }
 
-    public function profile_update(UserRequest $request, User $user){
+    public function profile_update(UserRequest $request, $id){
         try {
-            Log::info('profile_update started'); // デバッグログ追加
+            Log::info('profile_update started');
             $validatedData = $request->validated();
-            Log::info('Data validated', ['validatedData' => $validatedData]); // デバッグログ追加
-            
-            // updateArticleメソッドが存在しない場合は、標準のupdateメソッドを使用
-            $user->update($validatedData);
-            Log::info('User updated', ['user' => $user]); // デバッグログ追加
-            
-            return redirect()->route('user.profile_list')
+            Log::info('Data validated', ['validatedData' => $validatedData]);
+    
+            $user = User::find(1);
+            if (!$user) {
+                Log::warning('User not found', ['id' => $id]);
+                return redirect()->back()->with('error', 'ユーザーが見つかりませんでした');
+            }
+    
+            if ($request->hasFile('profile_image')) {
+                $file = $request->file('profile_image');
+                $path = $file->store('profile_images', 'public');
+                $validatedData['profile_image'] = $path;
+            }
+    
+            DB::transaction(function () use ($validatedData, $user) {
+                if ($user->update($validatedData)) {
+                    Log::info('User update successful', ['user' => $user]);
+                } else {
+                    Log::warning('User update failed', ['user' => $user]);
+                }
+            });
+    
+            return redirect()->route('user.profile_edit')
                 ->with('success', 'User updated successfully');
         } catch (\Exception $e) {
-            Log::error('Error updating user', ['error' => $e->getMessage()]); // デバッグログ追加
-            
+            Log::error('Error updating user', ['error' => $e->getMessage()]);
+    
             return redirect()->back()
                 ->with('error', '更新できませんでした');
         }
     }
-    
-    
 
     public function password_update(Request $request)
     {

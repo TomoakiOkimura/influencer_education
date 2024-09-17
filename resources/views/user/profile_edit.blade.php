@@ -12,8 +12,8 @@
 
             <div class="mb-3">
                 <label for="profile_image" class="form-label">プロフィール画像</label>
-                <img alt="プロフィール画像" width="100">
-                <input id="profile_image" type="file" name="profile_image" class="form-control" nullable>
+                <input id="profile_image" type="file" name="profile_image" class="form-control">
+                <img src="{{ asset('storage/' . $user->profile_image) }}" alt="商品画像" class="profile_image">
             </div><br>
 
             <div class="mb-3">
@@ -32,8 +32,7 @@
             </div><br>
 
             <div class="mb-3">
-                <label for="password" class="form-label">パスワード</label>
-                <div class="form-group">{{ $user->password }}</div>
+                <label for="password" class="form-label">パスワード</label><br>
                 <a href="{{ route('user.password_edit', ['user' => $user->id]) }}" class="btn btn-info btn-sm mx-1">パスワードを変更する</a>
             </div><br>
 

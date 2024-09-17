@@ -14,4 +14,14 @@ class CurriculumProgress extends Model
         'user_id',
         'clear_flg',
     ];
+
+    public function curriculum()
+    {
+        return $this->belongsTo(Curriculum::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

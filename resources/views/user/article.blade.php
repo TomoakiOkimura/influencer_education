@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 
 @section('content')
 <div class="container">
@@ -10,10 +10,10 @@
                 <div class="form-group">{{ $article->posted_date }}</div>
             </label><br>
             <label for="title">
-                <div class="form-group">{{ $article->title }}</div>
-            </label><br>
+                <h1 class="form-group">{{ $article->title }}</h1>
+            </label><br><br>
             <label for="article_contents">
-                <div class="form-group">{{ $article->article_contents }}</div>
+                <div class="article_contents">{{ $article->article_contents }}</div>
             </label><br>
         </form>
         @endforeach

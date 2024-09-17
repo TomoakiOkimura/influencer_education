@@ -28,7 +28,7 @@ class UserRequest extends FormRequest
             'name' => 'required| max:255',
             'name_kana' => 'required| max:255',
             'email' => 'required| max:255',
-            'password' => 'required| max:255',
+            'profile_image' => 'nullable|image|max:2048',
         ];
     }
 
@@ -38,7 +38,7 @@ class UserRequest extends FormRequest
             'name' => 'ユーザーネーム',
             'name_kana' => 'ユーザーネーム カナ',
             'email' => 'メールアドレス',
-            'password' => 'パスワード',
+            'profile_image' =>'プロフィール画像'
         ];
     }
 
@@ -50,8 +50,6 @@ class UserRequest extends FormRequest
             'name_kana.max' => 'attributeは:max字以内で入力してください。',
             'email.required' => 'attributeは入力必須項目です。',
             'email.max' => 'attributeは:max字以内で入力してください。',
-            'password.required' => 'attributeは入力必須項目です。',
-            'password.max' => 'attributeは:max字以内で入力してください。',
         ];
     }
     

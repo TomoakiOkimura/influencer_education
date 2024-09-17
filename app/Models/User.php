@@ -44,4 +44,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
+
+    public function updateUser($requestData){
+        $this->name = $requestData->name;
+        $this->name_kana = $requestData->name_kana;
+        $this->email = $requestData->email;
+        $this->password= $requestData->password;
+        $this->grade_id = $requestData->grade_id;
+
+        if($requestData->hasFile('profile_image')){ 
+            $filename = $requestData->profile_image->getClientOriginalName();
+            $filePath = $requestData->profile_image->storeAs('users', $filename, 'public');
+            $this->profile_image = '/storage/' . $filePath;
+        }
+
+        $this->save();
+    }
 }

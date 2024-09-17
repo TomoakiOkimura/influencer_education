@@ -27,7 +27,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('user/{article}/article', [App\Http\Controllers\user\ArticleController::class, 'article'])->name('user.article');
 Route::get('user/profile_edit', [App\Http\Controllers\user\ProfileController::class, 'profile_edit'])->name('user.profile_edit');
-Route::put('user/profile_update', [App\Http\Controllers\user\ProfileController::class, 'profile_update'])->name('user.profile_update');
+Route::put('user/profile_update/{id}', [App\Http\Controllers\user\ProfileController::class, 'profile_update'])->name('user.profile_update');
 Route::get('user/password_edit', [App\Http\Controllers\user\ProfileController::class, 'password_edit'])->name('user.password_edit');
 Route::put('user/password_update', [App\Http\Controllers\user\ProfileController::class, 'password_update'])->name('user.password_update');
 Route::get('user/curriculum_list/{id?}', [App\Http\Controllers\user\CurriculumController::class, 'curriculum_list'])->name('user.curriculum_list');
