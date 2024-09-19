@@ -2,9 +2,11 @@
 
 @section('content')
 <div class="container">
-    <button type="button" onclick="history.back()">戻る</button>
-    <div>お知らせ一覧</div>
-    <th><a href="{{ route('admin.article_create') }}" class="btn btn-warning btn-sm mx-1">新規登録</a></th>
+    <th>
+        <button type="button" class="btn btn-secondary btn-sm " onclick="history.back()">戻る</button>
+        <h2>お知らせ一覧</h2>
+        <a href="{{ route('admin.article_create') }}" class="btn btn-warning btn-sm">新規登録</a>
+    </th>
     <table id="fav-table" class= "table table-striped" border="2">
         <thead>
             <tr>

@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    <button type="button" onclick="history.back()">戻る</button>
-    <div>パスワード変更</div>
+    <button type="button" class="btn btn-secondary btn-sm " onclick="history.back()">戻る</button>
+    <h2>パスワード変更</h2>
     
     <form method="POST" action="{{ route('user.password_update') }}">
         @csrf

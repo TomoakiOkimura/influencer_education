@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-    <button type="button" onclick="history.back()">戻る</button>
-    <div>お知らせ変更</div>
+    <button type="button" class="btn btn-secondary btn-sm " onclick="history.back()">戻る</button>
+    <h2>お知らせ変更</h2>
     <div class="card-body">
         <form method="POST" action="{{ route('admin.article_update', $article) }}" enctype="multipart/form-data">
             @csrf

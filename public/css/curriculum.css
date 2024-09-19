@@ -1,15 +1,23 @@
+.profile_image{
+  width: 150px;
+}
+
 
 .curriculum-container {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap; 
   }
+
+  .curriculum_title {
+    color: red!important;
+}
   
   .curriculum-block {
     padding: 30px;
     width: 32%;
     background-color: #fff;
   }
-  
+
   .curriculum-block:not(:nth-child(3n+3)) {
     margin-right: 2%;
   }

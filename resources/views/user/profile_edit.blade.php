@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 
 @section('content')
 <div class="container">
-    <button type="button" onclick="history.back()">戻る</button>
-    <div>プロフィール変更</div>
+    <button type="button" class="btn btn-secondary btn-sm " onclick="history.back()">戻る</button>
+    <h1>プロフィール変更</h1>
 
     <dl>
         <form method="POST" action="{{ route('user.profile_update', $user) }}" enctype="multipart/form-data">
@@ -11,9 +11,11 @@
             @method('PUT')
 
             <div class="mb-3">
-                <label for="profile_image" class="form-label">プロフィール画像</label>
-                <input id="profile_image" type="file" name="profile_image" class="form-control">
-                <img src="{{ asset('storage/' . $user->profile_image) }}" alt="商品画像" class="profile_image">
+                <label for="profile_image" class="form-label">
+                    <img src="{{ asset('storage/' . $user->profile_image) }}" alt="商品画像" class="profile_image"><br>
+                    プロフィール画像
+                    <input id="profile_image" type="file" name="profile_image" class="form-control">
+                </label>
             </div><br>
 
             <div class="mb-3">

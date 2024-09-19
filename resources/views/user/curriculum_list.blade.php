@@ -6,16 +6,13 @@
     <div class="row">
       <div >
         <label for="profile_image">
-          <div class="form-group">{{ $user->profile_image }}</div>
+          <img src="{{ asset('storage/' . $user->profile_image) }}" alt="商品画像" class="profile_image">
         </label>
 
         <label for="name">
-          <div class="form-group">{{ $user->name }}さんの授業進捗</div>
-        </label><br>
-
-        <label for="grade_name">
+          <div class="form-group">{{ $user->name }}さんの授業進捗</div><br>
           <div class="form-group">現在の学年：{{ $user->grade->name }}</div>
-        </label><br>
+        </label>
       </div>
 
 
@@ -35,7 +32,7 @@
       @foreach($curriculums as $curriculum)
       <div class="curriculum-block">
         @if(isset($curriculum_progress[$curriculum->id]) && $curriculum_progress[$curriculum->id]->clear_flg == 1)
-        <a href="{{ $curriculum->video_url }}">{{ $curriculum->title }}</a>
+        <a class="curriculum_title"  href="{{ $curriculum->video_url }}">{{ $curriculum->title }}</a>
         <div>受講済み</div>
         @else
         <span class="disabled">{{ $curriculum->title }}</span>
