@@ -18,7 +18,7 @@
 
       <div class="col col-md-4">
         <nav class="panel panel-default">
-          <div class="panel-heading">学年</div>
+          <h2 class="panel-heading">学年</h2>
           <div class="list-group">
           <a href="{{ route('user.curriculum_list') }}" class="list-group-item">学年一覧</a>
           @foreach($grades as $grade)
