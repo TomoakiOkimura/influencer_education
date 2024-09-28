@@ -79,12 +79,14 @@ class ProfileController extends Controller
         if (!Hash::check($request->old_password, $user->password)) {
             Log::warning('Old password does not match for user: ' . $user->id);
             return redirect('user/password_edit')
-            ->with('warning', 'パスワードが違います');
+            ->withErrors(['old_password' => '旧パスワードが一致しません']);
         }
 
         // 新規パスワードの確認
         $request->validate([
             'new_password' => 'required|string|min:8|confirmed',
+        ],[
+            'new_password.confirmed' => '新パスワードが一致しません',
         ]);
 
         Log::info('New password validated for user: ' . $user->id);

@@ -11,7 +11,7 @@
 
             <div class="mb-3">
                 <label for="posted_date" class="form-label">投稿日時</label>
-                <input type="text" class="form-control" id="posted_date" name="posted_date" value="{{ $article->posted_date }}" required>
+                <input type="date" class="form-control" id="posted_date" name="posted_date" value="{{ \Carbon\Carbon::parse($article->posted_date)->format('Y-m-d') }}" required>
             </div>
 
             <div class="mb-3">

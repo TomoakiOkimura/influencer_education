@@ -15,22 +15,34 @@
                     <img src="{{ asset('storage/' . $user->profile_image) }}" alt="商品画像" class="profile_image"><br>
                     プロフィール画像
                     <input id="profile_image" type="file" name="profile_image" class="form-control">
+                    @if($errors->has('profile_image'))
+                        <p style="color:#ff0000">{{ $errors->first('profile_image') }}</p>
+                    @endif
                 </label>
             </div><br>
 
             <div class="mb-3">
                 <label for="name" class="form-label">ユーザーネーム</label>  
-                <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}" required>
+                <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}">
+                @if($errors->has('name'))
+                    <p style="color:#ff0000">{{ $errors->first('name') }}</p>
+                @endif
             </div><br>
 
             <div class="mb-3">
                 <label for="name_kana" class="form-label">カナ</label>
-                <input type="text" class="form-control" id="name_kana" name="name_kana" value="{{ $user->name_kana }}" required>
+                <input type="text" class="form-control" id="name_kana" name="name_kana" value="{{ $user->name_kana }}">
+                @if($errors->has('name_kana'))
+                    <p style="color:#ff0000">{{ $errors->first('name_kana') }}</p>
+                @endif
             </div><br>
 
             <div class="mb-3">
                 <label for="email" class="form-label">メールアドレス</label>
-                <input type="text" class="form-control" id="email" name="email" value="{{ $user->email }}" required>
+                <input type="text" class="form-control" id="email" name="email" value="{{ $user->email }}">
+                @if($errors->has('email'))
+                    <p style="color:#ff0000">{{ $errors->first('email') }}</p>
+                @endif
             </div><br>
 
             <div class="mb-3">
